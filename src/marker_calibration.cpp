@@ -11,9 +11,10 @@
 //// checker_board, field_size, frame_size는 상황에 맞춰서 변경
 
 int main(int argc, char ** argv) {
-    
+
     std::vector<cv::String> file_names;
-    std::string path="/home/sgtubunamr/catkin_ws/src/aruco_test/images/opencv_frame_*.png";
+    // need to edit here
+    std::string path="/home/amrlabs2/catkin_ws/src/cpp_aruco_marker/images/opencv_frame_*.png";
     cv::glob(path, file_names, false);
     // cv::Size pattern_size(25 - 1, 18 - 1);
     /// 안쪽의 깍두기 갯수 (가로, 세로) 전체 갯수에서 안쪽이므로 -1 해준다
@@ -21,8 +22,8 @@ int main(int argc, char ** argv) {
     std::vector<std::vector<cv::Point2f>> q(file_names.size());  // image points
 
     std::vector<std::vector<cv::Point3f>> Q;
-    // 1. Generate checkerboard (world) coordinates Q. 
-    
+    // 1. Generate checkerboard (world) coordinates Q.
+
     // The board has 25 x 18, fields with a size of 15x15mm
     // 보드 사이즈에 따라서 바꾸기
     // int checker_board[2] = {24, 18};
@@ -50,7 +51,7 @@ int main(int argc, char ** argv) {
         // 2. Read in the image an call cv::findChessboardCorners()
         cv::Mat img = cv::imread(file_names[i]);
         cv::Mat gray;
-        
+
         // convert
         cv::cvtColor(img, gray, cv::COLOR_RGB2GRAY);
         bool pattern_found = cv::findChessboardCorners(gray, pattern_size, q[i], cv::CALIB_CB_ADAPTIVE_THRESH + cv::CALIB_CB_NORMALIZE_IMAGE + cv::CALIB_CB_FAST_CHECK); // default value parameters
@@ -66,7 +67,7 @@ int main(int argc, char ** argv) {
         // 4. Display
         cv::drawChessboardCorners(img, pattern_size, q[i], pattern_found);
         cv::imshow("chessboard detection", img);
-        cv::waitKey(0);  /// 0 이면 ESC 를 누르면 다음 진행 
+        cv::waitKey(0);  /// 0 이면 ESC 를 누르면 다음 진행
         i++;
     }
 
@@ -75,9 +76,10 @@ int main(int argc, char ** argv) {
     std::vector<cv::Mat> rvecs, tvecs;  /// rotation vectors  /// translation vectors
     std::vector<double> std_intrinsics, std_extrinsics, per_view_errors;
     int flags = cv::CALIB_FIX_ASPECT_RATIO + cv::CALIB_FIX_K3 + cv::CALIB_ZERO_TANGENT_DIST + cv::CALIB_FIX_PRINCIPAL_POINT; // it's stardard value
-    
+
     // cv::Size frame_size(1440, 1080);  // image size
-    cv::Size frame_size(1280, 720);  // image size
+    // cv::Size frame_size(1280, 720);  // image size for cam
+    cv::Size frame_size(1920, 1080);  // image size for robot
 
     ROS_INFO("Calibration...");
 
@@ -112,4 +114,4 @@ int main(int argc, char ** argv) {
 
     return 0;
 
-}    
+}

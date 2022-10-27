@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>aruco_test</name>
+  <name>cpp_aruco_marker</name>
   <version>0.0.0</version>
-  <description>The aruco_test package</description>
+  <description>The cpp_aruco_marker package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
