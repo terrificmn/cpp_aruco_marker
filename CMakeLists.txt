@@ -10,7 +10,7 @@ set(OpenCV_DIR /usr/lib/x86_64-linux-gnu/cmake/opencv4/)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp OpenCV
+  roscpp OpenCV roslib
 )
 
 ## System dependencies are found with CMake's conventions
@@ -59,6 +59,7 @@ include_directories(
 add_executable(${PROJECT_NAME}_detect_marker_image src/marker_make_n_detect.cpp)
 add_executable(${PROJECT_NAME}_detect_marker_from_cam src/marker_detect_from_cam.cpp)
 add_executable(${PROJECT_NAME}_marker_calibration src/marker_calibration.cpp)
+add_executable(${PROJECT_NAME}_marker_pose src/marker_pose.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -86,6 +87,10 @@ target_link_libraries(${PROJECT_NAME}_marker_calibration
   ${OpenCV_LIBS}
 )
 
+target_link_libraries(${PROJECT_NAME}_marker_pose
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBS}
+)
 #############
 ## Install ##
 #############

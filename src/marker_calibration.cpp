@@ -1,4 +1,5 @@
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <opencv2/calib3d.hpp>
 #include <opencv2/aruco.hpp>
 #include <opencv2/core.hpp>
@@ -14,7 +15,9 @@ int main(int argc, char ** argv) {
 
     std::vector<cv::String> file_names;
     // need to edit here
-    std::string path="/home/amrlabs2/catkin_ws/src/cpp_aruco_marker/images/opencv_frame_*.png";
+    std::string pkg_path = ros::package::getPath("cpp_aruco_marker"); //패키지명 넣어준다
+    
+    std::string path = pkg_path + "/images/opencv_frame_*.png";
     cv::glob(path, file_names, false);
     // cv::Size pattern_size(25 - 1, 18 - 1);
     /// 안쪽의 깍두기 갯수 (가로, 세로) 전체 갯수에서 안쪽이므로 -1 해준다
